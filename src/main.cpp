@@ -22,6 +22,8 @@
 
 #include <SFML/Graphics.hpp>
 
+#include "entity.hpp"
+
 int main () {
     sf::RenderWindow app (sf::VideoMode (640, 480, 32), "SFML Window");
 
@@ -29,10 +31,9 @@ int main () {
     if (!texture.LoadFromFile("resources/platform.png")) {
         return EXIT_FAILURE;
     }
-    sf::Sprite sprite(texture);
-    sprite.SetSubRect(sf::IntRect(485, 36, 19, 26));
-
-    int left = 0, top = 0;
+    Entity ent;
+    ent.SetTexture (texture);
+    //sprite.SetSubRect(sf::IntRect(485, 36, 19, 26));
 
     bool running = true;
     while (running) {
@@ -57,24 +58,24 @@ int main () {
         }
 
         if (sf::Keyboard::IsKeyPressed  (sf::Keyboard::Left)) {
-                            left--;
+            ent.x--;
         }
         if (sf::Keyboard::IsKeyPressed (sf::Keyboard::Right)) {
-                            left++;
+            ent.x++;
         }
         if (sf::Keyboard::IsKeyPressed (sf::Keyboard::Up)) {
-        top--;
+            ent.y--;
         }
         if (sf::Keyboard::IsKeyPressed (sf::Keyboard::Down)) {
-                            top++;
+            ent.y++;
         }
 
 
         // move the sprite
-        sprite.SetPosition (left, top);
+        //sprite.SetPosition (left, top);
 
         app.Clear ();
-        app.Draw (sprite);
+        ent.Draw (app);
         app.Display ();
     }
 
