@@ -25,6 +25,8 @@
 Entity::Entity () :
     _sprite () {
     x = y = 0;
+    xspeed = yspeed = 0;
+    width = height = 0;
 }
 
 Entity::~Entity () {
@@ -35,7 +37,27 @@ void Entity::SetTexture (sf::Texture& texture) {
     _sprite.SetTexture (texture);
 }
 
+void Entity::SetSubRect (sf::IntRect& rect) {
+    _sprite.SetSubRect (rect);
+}
+
 void Entity::Draw (sf::RenderTarget& target) {
     _sprite.SetPosition (x, y);
     target.Draw (_sprite);
+}
+
+void Entity::Update (int delta) {
+    x += (xspeed * delta) / 1000;
+    y += (yspeed * delta) / 1000;
+}
+
+bool Entity::CheckCollision (Entity& other) {
+    return ((x < other.x + other.width) &&
+            (x + width > other.x) &&
+            (y < other.y + other.height) &&
+            (y + height > other.y));
+}
+
+void Entity::HandleCollision (Entity&) {
+
 }

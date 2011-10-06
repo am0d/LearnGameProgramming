@@ -25,16 +25,23 @@
 
 #include <SFML/Graphics.hpp>
 
-typedef class Entity {
+class Entity {
     public:
         Entity ();
         ~Entity ();
 
         void SetTexture (sf::Texture&);
+        void SetSubRect (sf::IntRect&);
 
         void Draw (sf::RenderTarget& target);
+        void Update (int delta);
 
-        int x, y; //position
+        bool CheckCollision (Entity& other);
+        void HandleCollision (Entity& other);
+
+        float x, y; //position
+        float xspeed, yspeed;
+        int width, height;
     private:
         sf::Sprite _sprite; //sprite
 };

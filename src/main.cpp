@@ -33,7 +33,8 @@ int main () {
     }
     Entity ent;
     ent.SetTexture (texture);
-    //sprite.SetSubRect(sf::IntRect(485, 36, 19, 26));
+    sf::IntRect r(485, 36, 19, 26);
+    ent.SetSubRect(r);
 
     bool running = true;
     while (running) {
@@ -69,7 +70,6 @@ int main () {
         if (sf::Keyboard::IsKeyPressed (sf::Keyboard::Down)) {
             ent.y++;
         }
-
 
         // move the sprite
         //sprite.SetPosition (left, top);
