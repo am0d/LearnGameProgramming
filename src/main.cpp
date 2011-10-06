@@ -8,6 +8,9 @@ int main () {
         return EXIT_FAILURE;
     }
     sf::Sprite sprite(texture);
+    sprite.SetSubRect(sf::IntRect(485, 36, 19, 26));
+
+    int left = 0, top = 0;
 
     bool running = true;
     while (running) {
@@ -18,8 +21,12 @@ int main () {
                     running = false;
                     break;
                 case sf::Event::KeyPressed:
-                    if (event.Key.Code == sf::Keyboard::Escape) {
-                        running = false;
+                    switch (event.Key.Code) {
+                        case sf::Keyboard::Escape:
+                            running = false;
+                            break;
+                        default:
+                            break;
                     }
                     break;
                 default:
@@ -27,8 +34,25 @@ int main () {
             }
         }
 
-        app.Clear();
-        app.Draw(sprite);
+        if (sf::Keyboard::IsKeyPressed  (sf::Keyboard::Left)) {
+                            left--;
+        }
+        if (sf::Keyboard::IsKeyPressed (sf::Keyboard::Right)) {
+                            left++;
+        }
+        if (sf::Keyboard::IsKeyPressed (sf::Keyboard::Up)) {
+        top--;
+        }
+        if (sf::Keyboard::IsKeyPressed (sf::Keyboard::Down)) {
+                            top++;
+        }
+
+
+        // move the sprite
+        sprite.SetPosition (left, top);
+
+        app.Clear ();
+        app.Draw (sprite);
         app.Display ();
     }
 
