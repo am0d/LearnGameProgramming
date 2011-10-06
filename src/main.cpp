@@ -1,7 +1,13 @@
-#include <SFML/Window.hpp>
+#include <SFML/Graphics.hpp>
 
 int main () {
-    sf::Window app (sf::VideoMode (640, 480, 32), "SFML Window");
+    sf::RenderWindow app (sf::VideoMode (640, 480, 32), "SFML Window");
+
+    sf::Texture texture;
+    if (!texture.LoadFromFile("resources/platform.png")) {
+        return EXIT_FAILURE;
+    }
+    sf::Sprite sprite(texture);
 
     bool running = true;
     while (running) {
@@ -21,6 +27,8 @@ int main () {
             }
         }
 
+        app.Clear();
+        app.Draw(sprite);
         app.Display ();
     }
 
