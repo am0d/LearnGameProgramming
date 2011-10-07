@@ -1,1 +1,1 @@
-src/main.o: src/main.cpp src/entity.hpp
+src/main.o: src/main.cpp src/player.hpp src/entity.hpp

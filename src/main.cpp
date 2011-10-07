@@ -22,7 +22,7 @@
 
 #include <SFML/Graphics.hpp>
 
-#include "entity.hpp"
+#include "player.hpp"
 
 int main () {
     sf::RenderWindow app (sf::VideoMode (640, 480, 32), "SFML Window");
@@ -31,12 +31,13 @@ int main () {
     if (!texture.LoadFromFile("resources/platform.png")) {
         return EXIT_FAILURE;
     }
-    Entity ent;
+    Player ent;
     ent.SetTexture (texture);
-    sf::IntRect r(485, 36, 19, 26);
-    ent.SetSubRect(r);
 
     bool running = true;
+    sf::Clock clock;
+    int elapsedTime;
+
     while (running) {
         sf::Event event;
         while (app.PollEvent (event)) {
@@ -57,20 +58,10 @@ int main () {
                     break;
             }
         }
+        elapsedTime = clock.GetElapsedTime ();
+        clock.Reset ();
 
-        if (sf::Keyboard::IsKeyPressed  (sf::Keyboard::Left)) {
-            ent.x--;
-        }
-        if (sf::Keyboard::IsKeyPressed (sf::Keyboard::Right)) {
-            ent.x++;
-        }
-        if (sf::Keyboard::IsKeyPressed (sf::Keyboard::Up)) {
-            ent.y--;
-        }
-        if (sf::Keyboard::IsKeyPressed (sf::Keyboard::Down)) {
-            ent.y++;
-        }
-
+        ent.Update (elapsedTime);
         // move the sprite
         //sprite.SetPosition (left, top);
 

@@ -20,30 +20,33 @@
  *    distribution.
  */
 
-#ifndef ENTITY_HPP
-#define ENTITY_HPP
+#include "player.hpp"
 
-#include <SFML/Graphics.hpp>
+Player::Player () :
+    Entity () {
+        xspeed = yspeed = 30.0f;
+}
 
-class Entity {
-    public:
-        Entity ();
-        ~Entity ();
+Player::~Player () {
 
-        void SetTexture (sf::Texture&);
-        void SetSubRect (sf::IntRect&);
+}
 
-        virtual void Draw (sf::RenderTarget& target);
-        virtual void Update (int delta);
+void Player::SetTexture (sf::Texture& texture) {
+    Entity::SetTexture (texture);
+    _sprite.SetSubRect (sf::IntRect (485, 36, 19, 26));
+}
 
-        bool CheckCollision (Entity& other);
-        void HandleCollision (Entity& other);
-
-        float x, y; //position
-        float xspeed, yspeed;
-        int width, height;
-    protected:
-        sf::Sprite _sprite; //sprite
-};
-
-#endif
+void Player::Update (int delta) {
+    if (sf::Keyboard::IsKeyPressed  (sf::Keyboard::Left)) {
+        x -= xspeed * delta / 1000.0f;
+    }
+    if (sf::Keyboard::IsKeyPressed (sf::Keyboard::Right)) {
+        x += xspeed * delta / 1000.0f;
+    }
+    if (sf::Keyboard::IsKeyPressed (sf::Keyboard::Up)) {
+        y -= yspeed * delta / 1000.0f;
+    }
+    if (sf::Keyboard::IsKeyPressed (sf::Keyboard::Down)) {
+        y += yspeed * delta / 1000.0f;
+    }
+}

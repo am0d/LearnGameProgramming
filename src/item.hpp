@@ -20,30 +20,17 @@
  *    distribution.
  */
 
-#ifndef ENTITY_HPP
-#define ENTITY_HPP
+#ifndef ITEM_HPP
+#define ITEM_HPP
 
-#include <SFML/Graphics.hpp>
+#include "entity.hpp"
 
-class Entity {
+class Item : public Entity {
     public:
-        Entity ();
-        ~Entity ();
+        Item ();
+        ~Item ();
 
-        void SetTexture (sf::Texture&);
-        void SetSubRect (sf::IntRect&);
-
-        virtual void Draw (sf::RenderTarget& target);
-        virtual void Update (int delta);
-
-        bool CheckCollision (Entity& other);
-        void HandleCollision (Entity& other);
-
-        float x, y; //position
-        float xspeed, yspeed;
-        int width, height;
-    protected:
-        sf::Sprite _sprite; //sprite
+    private:
 };
 
 #endif

@@ -1,3 +1,4 @@
+
 /* Copyright (c) 2011 by Damien Schoof
  *
  * This software is provided 'as-is', without any express or implied
@@ -20,30 +21,21 @@
  *    distribution.
  */
 
-#ifndef ENTITY_HPP
-#define ENTITY_HPP
+#ifndef PLAYER_HPP
+#define PLAYER_HPP
 
-#include <SFML/Graphics.hpp>
+#include "entity.hpp"
 
-class Entity {
+class Player : public Entity {
     public:
-        Entity ();
-        ~Entity ();
+        Player ();
+        ~Player ();
 
         void SetTexture (sf::Texture&);
-        void SetSubRect (sf::IntRect&);
+        
+        void Update (int delta);
 
-        virtual void Draw (sf::RenderTarget& target);
-        virtual void Update (int delta);
-
-        bool CheckCollision (Entity& other);
-        void HandleCollision (Entity& other);
-
-        float x, y; //position
-        float xspeed, yspeed;
-        int width, height;
-    protected:
-        sf::Sprite _sprite; //sprite
+    private:
 };
 
 #endif
