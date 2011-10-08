@@ -36,8 +36,8 @@ class Entity {
         virtual void Draw (sf::RenderTarget& target);
         virtual void Update (int delta);
 
-        bool CheckCollision (Entity& other);
-        void HandleCollision (Entity& other);
+        virtual bool CheckCollision (Entity* other);
+        virtual void HandleCollision (Entity* other);
 
         float x, y; //position
         float xspeed, yspeed;

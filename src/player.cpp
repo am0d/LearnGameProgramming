@@ -25,6 +25,8 @@
 Player::Player () :
     Entity () {
         xspeed = yspeed = 30.0f;
+        width = 19;
+        height = 26;
 }
 
 Player::~Player () {
@@ -33,7 +35,7 @@ Player::~Player () {
 
 void Player::SetTexture (sf::Texture& texture) {
     Entity::SetTexture (texture);
-    _sprite.SetSubRect (sf::IntRect (485, 36, 19, 26));
+    _sprite.SetSubRect (sf::IntRect (485, 36, width, height));
 }
 
 void Player::Update (int delta) {
@@ -49,4 +51,8 @@ void Player::Update (int delta) {
     if (sf::Keyboard::IsKeyPressed (sf::Keyboard::Down)) {
         y += yspeed * delta / 1000.0f;
     }
+}
+
+void Player::HandleCollision (Entity* ) {
+
 }

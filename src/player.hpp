@@ -32,6 +32,8 @@ class Player : public Entity {
         ~Player ();
 
         void SetTexture (sf::Texture&);
+
+        void HandleCollision (Entity* other);
         
         void Update (int delta);
 

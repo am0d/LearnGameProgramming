@@ -51,13 +51,13 @@ void Entity::Update (int delta) {
     y += (yspeed * delta) / 1000;
 }
 
-bool Entity::CheckCollision (Entity& other) {
-    return ((x < other.x + other.width) &&
-            (x + width > other.x) &&
-            (y < other.y + other.height) &&
-            (y + height > other.y));
+bool Entity::CheckCollision (Entity* other) {
+    return ((x < (other->x + other->width)) &&
+            ((x + width) > other->x) &&
+            (y < (other->y + other->height)) &&
+            ((y + height) > other->y));
 }
 
-void Entity::HandleCollision (Entity&) {
+void Entity::HandleCollision (Entity*) {
 
 }

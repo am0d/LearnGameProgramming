@@ -20,9 +20,11 @@
  *    distribution.
  */
 
+#include <list>
 #include <SFML/Graphics.hpp>
 
 #include "player.hpp"
+#include "item.hpp"
 
 int main () {
     sf::RenderWindow app (sf::VideoMode (640, 480, 32), "SFML Window");
@@ -31,8 +33,16 @@ int main () {
     if (!texture.LoadFromFile("resources/platform.png")) {
         return EXIT_FAILURE;
     }
-    Player ent;
-    ent.SetTexture (texture);
+
+    // list of all game entities
+    std::list<Entity*> entities;
+    
+    // Player entity
+    Player* ent = new Player ();
+    ent->SetTexture (texture);
+    entities.push_back (ent);
+
+    entities.push_back (new Item ());
 
     bool running = true;
     sf::Clock clock;
@@ -61,13 +71,40 @@ int main () {
         elapsedTime = clock.GetElapsedTime ();
         clock.Reset ();
 
-        ent.Update (elapsedTime);
+        // update all the entities
+        for (std::list<Entity*>::iterator i = entities.begin ();
+                i != entities.end ();
+                i++) {
+            // update the entity
+            (*i)->Update (elapsedTime);
+
+            // check for any collisions
+            for (std::list<Entity*>::iterator j = entities.begin ();
+                    j != entities.end ();
+                    j++) {
+                if (i != j) {
+                    if ((*i)->CheckCollision (*j)) {
+                        (*i)->HandleCollision (*j);
+                    }
+                }
+            }
+        }
         // move the sprite
         //sprite.SetPosition (left, top);
 
         app.Clear ();
-        ent.Draw (app);
+        for (std::list<Entity*>::iterator i = entities.begin ();
+                i != entities.end ();
+                i++) {
+            (*i)->Draw (app);
+        }
         app.Display ();
+    }
+
+    // clean up
+    while (!entities.empty()) {
+        delete entities.front ();
+        entities.pop_front ();
     }
 
     return EXIT_SUCCESS;
