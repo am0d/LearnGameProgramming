@@ -27,6 +27,7 @@ Entity::Entity () :
     x = y = 0;
     xspeed = yspeed = 0;
     width = height = 0;
+    isDead = false;
 }
 
 Entity::~Entity () {
@@ -35,9 +36,11 @@ Entity::~Entity () {
 
 void Entity::SetTexture (sf::Texture& texture) {
     _sprite.SetTexture (texture);
+    _sprite.SetSubRect (_clip);
 }
 
 void Entity::SetSubRect (sf::IntRect& rect) {
+    _clip = rect;
     _sprite.SetSubRect (rect);
 }
 

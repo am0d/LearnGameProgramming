@@ -1,1 +1,1 @@
-src/item.o: src/item.cpp src/item.hpp src/entity.hpp
+src/item.o: src/item.cpp src/item.hpp src/entity.hpp src/player.hpp

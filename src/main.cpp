@@ -34,15 +34,20 @@ int main () {
         return EXIT_FAILURE;
     }
 
-    // list of all game entities
-    std::list<Entity*> entities;
+    // list of all game items
+    std::list<Entity*> items;
     
     // Player entity
-    Player* ent = new Player ();
-    ent->SetTexture (texture);
-    entities.push_back (ent);
+    Player* player = new Player ();
+    player->SetTexture (texture);
 
-    entities.push_back (new Item ());
+    for (int i=0; i < 5; i++) {
+        Item* item = new Item();
+        item->SetTexture (texture);
+        item->x = i*10;
+        item->y = i*10;
+        items.push_back (item);
+    }
 
     bool running = true;
     sf::Clock clock;
@@ -71,30 +76,36 @@ int main () {
         elapsedTime = clock.GetElapsedTime ();
         clock.Reset ();
 
-        // update all the entities
-        for (std::list<Entity*>::iterator i = entities.begin ();
-                i != entities.end ();
+        // update all the items
+        player->Update (elapsedTime);
+        for (std::list<Entity*>::iterator i = items.begin ();
+                i != items.end ();
                 i++) {
             // update the entity
             (*i)->Update (elapsedTime);
 
             // check for any collisions
-            for (std::list<Entity*>::iterator j = entities.begin ();
-                    j != entities.end ();
-                    j++) {
-                if (i != j) {
-                    if ((*i)->CheckCollision (*j)) {
-                        (*i)->HandleCollision (*j);
-                    }
-                }
+            if (player->CheckCollision (*i)) {
+                        player->HandleCollision (*i);
+                        (*i)->HandleCollision (player);
             }
         }
-        // move the sprite
-        //sprite.SetPosition (left, top);
+
+        std::list<Entity*>::iterator i = items.begin ();
+        while (i != items.end ()) {
+            if ((*i)->isDead) {
+                delete *i;
+                items.erase (i++);
+            }
+            else {
+                i++;
+            }
+        }
 
         app.Clear ();
-        for (std::list<Entity*>::iterator i = entities.begin ();
-                i != entities.end ();
+        player->Draw (app);
+        for (std::list<Entity*>::iterator i = items.begin ();
+                i != items.end ();
                 i++) {
             (*i)->Draw (app);
         }
@@ -102,9 +113,10 @@ int main () {
     }
 
     // clean up
-    while (!entities.empty()) {
-        delete entities.front ();
-        entities.pop_front ();
+    delete player;
+    while (!items.empty()) {
+        delete items.front ();
+        items.pop_front ();
     }
 
     return EXIT_SUCCESS;

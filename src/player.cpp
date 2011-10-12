@@ -27,15 +27,11 @@ Player::Player () :
         xspeed = yspeed = 30.0f;
         width = 19;
         height = 26;
+        _clip = sf::IntRect (485, 36, width, height);
 }
 
 Player::~Player () {
 
-}
-
-void Player::SetTexture (sf::Texture& texture) {
-    Entity::SetTexture (texture);
-    _sprite.SetSubRect (sf::IntRect (485, 36, width, height));
 }
 
 void Player::Update (int delta) {

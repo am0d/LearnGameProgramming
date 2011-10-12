@@ -24,11 +24,14 @@
 #define ITEM_HPP
 
 #include "entity.hpp"
+#include "player.hpp"
 
 class Item : public Entity {
     public:
         Item ();
         ~Item ();
+
+        void HandleCollision (Entity*);
 
     private:
 };

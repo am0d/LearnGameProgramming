@@ -24,10 +24,15 @@
 
 Item::Item () :
     Entity () {
-        width = 5;
-        height = 5;
+        width = 11;
+        height = 11;
+        _clip = sf::IntRect (586, 1, width, height);
 }
 
 Item::~Item () {
 
+}
+
+void Item::HandleCollision (Entity*) {
+    isDead = true;
 }

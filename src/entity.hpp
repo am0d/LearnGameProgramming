@@ -42,8 +42,10 @@ class Entity {
         float x, y; //position
         float xspeed, yspeed;
         int width, height;
+        bool isDead;
     protected:
         sf::Sprite _sprite; //sprite
+        sf::IntRect _clip;  //clipping rectangle
 };
 
 #endif
