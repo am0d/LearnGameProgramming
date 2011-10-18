@@ -46,6 +46,8 @@ class Entity {
     protected:
         sf::Sprite _sprite; //sprite
         sf::IntRect _clip;  //clipping rectangle
+        float _animTime;
+        float _animSpeed;
 };
 
 #endif

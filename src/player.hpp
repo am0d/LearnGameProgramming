@@ -26,6 +26,11 @@
 
 #include "entity.hpp"
 
+typedef enum FacingDirection {
+    LEFT,
+    RIGHT
+} FacingDirection;
+
 class Player : public Entity {
     public:
         Player ();
@@ -34,8 +39,12 @@ class Player : public Entity {
         void HandleCollision (Entity* other);
         
         void Update (int delta);
+        void Draw (sf::RenderTarget& target);
 
     private:
+        sf::IntRect _clippings[8];   // the clipping rectangles for the different frames
+        FacingDirection _facing;    // direction the player is facing
+        bool _moving;               // is the player moving
 };
 
 #endif
